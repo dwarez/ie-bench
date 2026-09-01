@@ -1,0 +1,15 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Benchmark artifacts can be large and may contain prompts/responses.
+results/
+
+# Local credentials and endpoint variants.
+.env
+.env.*
+!.env.example
+configs/endpoints/local-*.toml

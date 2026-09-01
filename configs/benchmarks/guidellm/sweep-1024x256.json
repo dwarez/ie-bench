@@ -1,0 +1,22 @@
+{
+  "metadata": {"labels": {"scenario": "sweep-1024x256"}},
+  "spec": {
+    "profile": {
+      "kind": "sweep",
+      "sweep_size": 6,
+      "strategy_type": "constant",
+      "max_concurrency": 256,
+      "rampup_duration": 5
+    },
+    "constraints": [
+      {"kind": "max_duration", "seconds": 20},
+      {"kind": "max_errors", "count": 3},
+      {"kind": "over_saturation"}
+    ],
+    "data": [
+      {"kind": "synthetic_text", "prompt_tokens": 1024, "output_tokens": 256}
+    ],
+    "seed": {"kind": "static", "value": 42},
+    "metrics": {"kind": "generative", "sample_size": 10}
+  }
+}

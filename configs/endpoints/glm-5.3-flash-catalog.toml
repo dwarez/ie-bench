@@ -1,0 +1,22 @@
+# Catalog deployment is intentional: the official vLLM recipe requires v0.29.0+
+# and no public v0.29.0 image exists yet. HF selects its tested runtime and H200x8.
+[endpoint]
+source = "catalog"
+name = "guidellm-glm-5-3-flash"
+repository = "zai-org/GLM-5.3-Flash"
+accelerator = "gpu"
+
+[run]
+reuse_existing = false
+startup_timeout_seconds = 3600
+after_run = "pause"
+
+[benchmark]
+results_dir = "../../results"
+scenarios = [
+  "../benchmarks/guidellm/smoke.json",
+  "../benchmarks/guidellm/latency-512x128.json",
+  "../benchmarks/guidellm/concurrent-512x128.json",
+  "../benchmarks/guidellm/sweep-1024x256.json",
+  "../benchmarks/guidellm/multimodal-image-720p.json",
+]

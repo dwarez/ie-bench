@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "labels": {
+      "scenario": "smoke"
+    }
+  },
+  "spec": {
+    "profile": {
+      "kind": "synchronous"
+    },
+    "constraints": [
+      {
+        "kind": "max_requests",
+        "count": 3
+      },
+      {
+        "kind": "max_errors",
+        "count": 1
+      }
+    ],
+    "data": [
+      {
+        "kind": "synthetic_text",
+        "prompt_tokens": 128,
+        "output_tokens": 64
+      }
+    ],
+    "seed": {
+      "kind": "static",
+      "value": 42
+    },
+    "metrics": {
+      "kind": "generative",
+      "sample_size": 3
+    }
+  }
+}

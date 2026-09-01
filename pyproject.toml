@@ -1,0 +1,24 @@
+[project]
+name = "hf-inference-endpoints-lab"
+version = "0.1.0"
+description = "Reproducible deployment, validation, and benchmarking tools for Hugging Face Inference Endpoints"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "guidellm[plot,recommended,vision]==0.7.3",
+  "huggingface-hub==1.29.0",
+  "rich>=14,<15",
+]
+
+[project.scripts]
+ie-benchmark = "hf_ie_tools.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hf_ie_tools"]
+
+[dependency-groups]
+dev = []

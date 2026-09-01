@@ -1,0 +1,22 @@
+# Catalog deployment is intentional: this model requires the dedicated
+# vllm/vllm-openai:qwen38-flash-next runtime, not v0.28.0.
+[endpoint]
+source = "catalog"
+name = "guidellm-qwen3-8-flash-next"
+repository = "Qwen/Qwen3.8-Flash-Next"
+accelerator = "gpu"
+
+[run]
+reuse_existing = false
+startup_timeout_seconds = 3600
+after_run = "pause"
+
+[benchmark]
+results_dir = "../../results"
+scenarios = [
+  "../benchmarks/guidellm/smoke.json",
+  "../benchmarks/guidellm/latency-512x128.json",
+  "../benchmarks/guidellm/concurrent-512x128.json",
+  "../benchmarks/guidellm/sweep-1024x256.json",
+  "../benchmarks/guidellm/multimodal-image-720p.json",
+]

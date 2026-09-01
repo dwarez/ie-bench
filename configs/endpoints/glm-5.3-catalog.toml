@@ -1,0 +1,22 @@
+# This follows the Model Catalog's deploy action: the catalog selects the
+# tested vLLM image, container arguments, and H200 x8 hardware.
+[endpoint]
+source = "catalog"
+name = "guidellm-glm-5-3"
+repository = "zai-org/GLM-5.3"
+accelerator = "gpu"
+
+[run]
+reuse_existing = false
+startup_timeout_seconds = 3600
+after_run = "pause"
+
+[benchmark]
+results_dir = "../../results"
+scenarios = [
+  "../benchmarks/guidellm/smoke.json",
+  "../benchmarks/guidellm/latency-512x128.json",
+  "../benchmarks/guidellm/concurrent-512x128.json",
+  "../benchmarks/guidellm/sweep-1024x256.json",
+  "../benchmarks/guidellm/sweep-4096x512.json",
+]

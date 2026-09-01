@@ -1,0 +1,26 @@
+# Catalog deployment mirrors the Qwen3.8-27B catalog card; HF selects its
+# tested vLLM image, arguments, and A100 x1 hardware.
+[endpoint]
+source = "catalog"
+name = "guidellm-qwen38-27"
+repository = "Qwen/Qwen3.8-27B"
+accelerator = "gpu"
+
+[run]
+reuse_existing = true
+startup_timeout_seconds = 3600
+after_run = "pause"
+
+[benchmark]
+results_dir = "../../results"
+scenarios = [
+  "../benchmarks/guidellm/smoke.json",
+  "../benchmarks/guidellm/latency-512x128.json",
+  "../benchmarks/guidellm/concurrent-512x128.json",
+  "../benchmarks/guidellm/throughput-512x128.json",
+]
+
+# Capacity/latency runs should measure answer generation, not exhaust the
+# output budget inside reasoning_content with an empty final answer.
+[benchmark.extra_body.chat_template_kwargs]
+enable_thinking = false

@@ -1,0 +1,29 @@
+{
+  "metadata": {"labels": {"scenario": "multimodal-image-720p"}},
+  "spec": {
+    "profile": {
+      "kind": "concurrent",
+      "streams": [1, 2, 4, 8],
+      "warmup": 0.1,
+      "cooldown": 0.1
+    },
+    "constraints": [
+      {"kind": "max_duration", "seconds": 20},
+      {"kind": "max_errors", "count": 3},
+      {"kind": "over_saturation"}
+    ],
+    "data": [
+      {
+        "kind": "synthetic_image",
+        "resolution": "720p",
+        "format": "jpeg",
+        "content": "checkerboard",
+        "images_per_request": 1,
+        "output_tokens": 256,
+        "seed": 42
+      }
+    ],
+    "seed": {"kind": "static", "value": 42},
+    "metrics": {"kind": "generative", "sample_size": 10}
+  }
+}

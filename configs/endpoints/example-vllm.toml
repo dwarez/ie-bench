@@ -1,0 +1,38 @@
+# Copy to a named config. Commit shared definitions; local-*.toml stays gitignored.
+# Hardware availability/quota is validated automatically before creation.
+[endpoint]
+source = "custom"
+name = "guidellm-qwen-smoke"
+repository = "Qwen/Qwen2.5-0.5B-Instruct"
+framework = "custom"
+task = "text-generation"
+accelerator = "gpu"
+vendor = "aws"
+region = "us-east-1"
+instance_type = "nvidia-l4"
+instance_size = "x1"
+type = "authenticated"
+min_replica = 1
+max_replica = 1
+tags = ["benchmark", "guidellm", "vllm-0.28"]
+
+[endpoint.custom_image.vLLM]
+url = "vllm/vllm-openai:v0.28.0"
+healthRoute = "/health"
+port = 8000
+tensorParallelSize = 1
+
+[run]
+# Existing endpoints are never silently reused: opt in after checking their config.
+reuse_existing = false
+startup_timeout_seconds = 1800
+# Cost-safe default. Other values: keep, scale-to-zero, delete.
+after_run = "pause"
+
+[benchmark]
+results_dir = "../../results"
+scenarios = [
+  "../benchmarks/guidellm/smoke.json",
+  "../benchmarks/guidellm/latency-512x128.json",
+  "../benchmarks/guidellm/concurrent-512x128.json",
+]

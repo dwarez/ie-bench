@@ -1,0 +1,23 @@
+{
+  "metadata": {"labels": {"scenario": "poisson-512x128"}},
+  "spec": {
+    "profile": {
+      "kind": "poisson",
+      "rate": [1, 2, 4, 8, 16, 32],
+      "max_concurrency": 128,
+      "rampup_duration": 5,
+      "warmup": {"mode": "duration", "value": 8},
+      "cooldown": {"mode": "duration", "value": 2}
+    },
+    "constraints": [
+      {"kind": "max_duration", "seconds": 30},
+      {"kind": "max_errors", "count": 3},
+      {"kind": "over_saturation"}
+    ],
+    "data": [
+      {"kind": "synthetic_text", "prompt_tokens": 512, "output_tokens": 128}
+    ],
+    "seed": {"kind": "static", "value": 42},
+    "metrics": {"kind": "generative", "sample_size": 10}
+  }
+}
